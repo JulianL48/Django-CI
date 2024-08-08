@@ -41,17 +41,17 @@ jobs:
       run: |
         pytest --cov=. --cov-report=xml
 
-    - name: Run SonarCloud analysis
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: |
-        sonar-scanner \
-          -Dsonar.projectKey=Django-CI \
-          -Dsonar.organization==JulianL48 \
-          -Dsonar.sources=. \
-          -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.login=$SONAR_TOKEN \
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@v2
+      with:
+          args: >
+            -Dsonar.projectKey=Django-CI
+            -Dsonar.organization=JulianL48
+            -Dsonar.sources=.
+            -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.python.coverage.reportPaths=coverage.xml
+      env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
     - name: Upload coverage report
       uses: actions/upload-artifact@v3
