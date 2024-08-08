@@ -27,13 +27,14 @@ jobs:
         cd ./MarketProject
         pip install -r requirements.txt
 
-    - name: Set up Python path
-      run: echo "PYTHONPATH=$(pwd)/MarketProject" >> $GITHUB_ENV
-
     - name: Run migrations
-      run:
+      run: |
+        cd ./MarketProject
         python manage.py migrate
 
+    - name: Set up Python path
+      run: echo "PYTHONPATH=$(pwd)/MarketProject" >> $GITHUB_ENV
+        
     - name: Run tests
       env:
         DJANGO_SETTINGS_MODULE: MarketProject.settings
