@@ -46,10 +46,11 @@ jobs:
       with:
           args: >
             -Dsonar.projectKey=JulianL48_Django-CI
-            -Dsonar.organization=JulianL48
+            -Dsonar.organization=julianl48
             -Dsonar.sources=.
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.python.coverage.reportPaths=coverage.xml
+            -Dsonar.branch.name=main
       env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
