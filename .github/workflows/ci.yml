@@ -28,7 +28,9 @@ jobs:
         pip install -r requirements.txt
 
     - name: Run migrations
-      run: python manage.py migrate
+      run: |
+        cd ./MarketProject
+        python manage.py migrate
 
     - name: Run tests
       env:
