@@ -35,3 +35,17 @@ def test_my_view(data, expected_status, expected_field_errors):
     else:
         # Verificar que no haya errores si no se esperan
         assert 'errors' not in response.data
+
+#Obtenemos el GETALL de las diferentes tablas
+@pytest.mark.django_db
+@pytest.mark.parametrize('url_name', [
+    'sector-list-create',
+    'proveedor-list-create',
+    'producto-list-create'
+])
+def test_example_view_get(url_name):
+    client = APIClient()
+    url = reverse(url_name)
+    response = client.get(url)
+    
+    assert response.status_code == status.HTTP_200_OK
