@@ -57,6 +57,7 @@ jobs:
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.python.coverage.reportPaths=coverage.xml
             -Dsonar.branch.name=main
+            -Dsonar.exclusions=**/wsgi.py
       env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
