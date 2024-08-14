@@ -53,6 +53,7 @@ jobs:
             -Dsonar.branch.name=main
       env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
 
     - name: Upload coverage report
       uses: actions/upload-artifact@v3
