@@ -40,14 +40,6 @@ class ProductosMayorQue5000(APIView):
 class ProductosPorProveedor(APIView):
     def post(self, request):
         proveedor_id = request.data.get('proveedor_id')
-        if not proveedor_id:
-            return Response({"error": "No se proporcionó ID de proveedor."}, status=status.HTTP_400_BAD_REQUEST)
-
-        try:
-            proveedor_id = int(proveedor_id)
-        except ValueError:
-            return Response({"error": "El ID no es numerico."}, status=status.HTTP_400_BAD_REQUEST)
-
         query = """
             SELECT p.* FROM Market_producto p
             INNER JOIN Market_proveedor pv ON pv.id = p.proveedor_id

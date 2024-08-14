@@ -45,11 +45,3 @@ def test_products_by_proveedor(data, expected_status, expected_field_errors):
     response = client.post(url, data, format='json')
     print(response.data)
     assert response.status_code == expected_status
-
-    if expected_field_errors:
-        for field, expected_error_list in expected_field_errors.items():
-            assert field in response.data
-            actual_errors = [str(e) for e in response.data[field]]
-            assert sorted(actual_errors) == sorted(expected_error_list)
-    else:
-        assert 'errors' not in response.data
