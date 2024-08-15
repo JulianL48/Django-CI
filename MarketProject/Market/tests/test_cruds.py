@@ -106,7 +106,7 @@ def test_delete_prov(prov_id, expected_status):
     [(
         {
             "nombre": "Test_Product",
-            "marcas": "MarcaTest",
+            "descripcion": "MarcaTest",
             "precio": 70000,
             "creado": "2024-08-12",
             "proveedor": 1
@@ -127,7 +127,7 @@ def test_create_prod(data, expected_status):
     [
         (2,{
             "nombre": "Test_ProductUpd",
-            "marcas": "MarcaTest1",
+            "descripcion": "MarcaTest1",
             "precio": 50000,
             "creado": "2024-08-12",
             "proveedor": 2
