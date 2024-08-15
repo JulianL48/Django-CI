@@ -30,8 +30,10 @@ jobs:
         cd ./MarketProject
         pip install -r requirements.txt
     
-    - name: Print environment variables
-      run: env
+    - name: Run makemigrations
+      run: |
+        cd ./MarketProject
+        python manage.py makemigrations
 
     - name: Run migrations
       run: |
