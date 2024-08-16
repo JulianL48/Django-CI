@@ -1,5 +1,31 @@
 import pytest
-from Market.models import Producto, Proveedor, Sector
+import datetime
+import pytz
+from django.utils import timezone
+from Market.models import Producto, Proveedor, Sector, Cliente, Factura
+
+@pytest.fixture
+def create_clientes(db):
+    # Creación de clientes
+    cliente1 = Cliente.objects.create(nombre="C1", direccion="Dir1", telefono=3115234564, email="prueba@hotmail.com")
+    cliente2 = Cliente.objects.create(nombre="C2", direccion="Dir2", telefono=3115234534, email="prueba1@hotmail.com")
+    cliente3 = Cliente.objects.create(nombre="C3", direccion="Dir3", telefono=3115234594, email="prueba2@hotmail.com")
+    return [cliente1, cliente2, cliente3]
+
+@pytest.fixture
+def create_factura(create_clientes):
+    c1, c2, c3 = create_clientes
+    tz = pytz.UTC
+    # Crear fechas conscientes de la zona horaria
+    fecha_emision = timezone.make_aware(datetime.datetime(2024, 8, 16, 0, 0, 0), tz)
+    fecha_vencimiento1 = timezone.make_aware(datetime.datetime(2024, 9, 16, 0, 0, 0), tz)
+    fecha_vencimiento2 = timezone.make_aware(datetime.datetime(2024, 8, 26, 0, 0, 0), tz)
+    fecha_vencimiento3 = timezone.make_aware(datetime.datetime(2024, 10, 16, 0, 0, 0), tz)
+    # Creación de facturas
+    factura1 = Factura.objects.create(cliente_id=c1, fecha_emision=fecha_emision, fecha_vencimiento=fecha_vencimiento1, total=0)
+    factura2 = Factura.objects.create(cliente_id=c2, fecha_emision=fecha_emision, fecha_vencimiento=fecha_vencimiento2, total=0)
+    factura3 = Factura.objects.create(cliente_id=c3, fecha_emision=fecha_emision, fecha_vencimiento=fecha_vencimiento3, total=0)
+    return [factura1, factura2, factura3]
 
 @pytest.fixture
 def create_sectors(db):

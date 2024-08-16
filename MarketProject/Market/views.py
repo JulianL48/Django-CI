@@ -1,4 +1,5 @@
 from django.utils import timezone
+from django.db import transaction
 from datetime import timedelta
 from rest_framework.views import APIView
 from rest_framework import generics
@@ -75,7 +76,8 @@ class ProductosPorProveedor(APIView):
         serializer = ProductoSerializer(productos, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-class Facturando(APIView):   
+class Facturando(APIView):
+    @transaction.atomic
     def post(self, request):
         client_id = request.data.get('cliente_id')
         products = request.data.get('productos')
@@ -109,14 +111,17 @@ class Facturando(APIView):
                     # Actualizar el total de la factura
                     factura.total = total_final
                     factura.save()
+                    
                 except Producto.DoesNotExist:
                     return Response(f"Producto con id {product_id} no encontrado", status=status.HTTP_404_NOT_FOUND)
                 
             if factura.total>0 :
-                print(f"Factura creada con id: {factura.id}")
-                return Response("Factura almacenada correctamente", status=status.HTTP_200_OK)
+                response_data = {
+                        "factura_id": factura.id,
+                        "mensaje": "Factura generada correctamente"
+                }
+                return Response(response_data, status=status.HTTP_200_OK)
             else :
                 return Response("Ocurrio un error al generar el total de la factura", status=status.HTTP_400_BAD_REQUEST)
-
         except Cliente.DoesNotExist:
             raise ValueError("Cliente no encontrado")
