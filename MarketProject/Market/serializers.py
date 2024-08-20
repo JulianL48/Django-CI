@@ -26,7 +26,7 @@ class FacturaSerializer(serializers.ModelSerializer):
         model = Factura
         fields = '__all__'
 
-class Detalle_FacturaSerializer(serializers.ModelSerializer):
+class DetalleFacturaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Detalle_Factura
         fields = '__all__'

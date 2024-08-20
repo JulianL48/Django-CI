@@ -4,7 +4,7 @@ from datetime import timedelta
 from rest_framework.views import APIView
 from rest_framework import generics
 from .models import Producto, Proveedor, Sector, Cliente, Factura, Detalle_Factura
-from .serializers import ProductoSerializer, ProveedorSerializer, SectorSerializers, ClienteSerializer, FacturaSerializer, Detalle_FacturaSerializer
+from .serializers import ProductoSerializer, ProveedorSerializer, SectorSerializers, ClienteSerializer, FacturaSerializer, DetalleFacturaSerializer
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -50,11 +50,11 @@ class FacturaRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
 
 class DetalleFacturaListCreate(generics.ListCreateAPIView):
     queryset = Detalle_Factura.objects.all()
-    serializer_class = Detalle_FacturaSerializer
+    serializer_class = DetalleFacturaSerializer
 
 class DetalleFacturaRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = Detalle_Factura.objects.all()
-    serializer_class = Detalle_FacturaSerializer
+    serializer_class = DetalleFacturaSerializer
             
 #Consulta todos los productos cuyo precio sea mayr a 5000
 class ProductosMayorQue5000(APIView):
