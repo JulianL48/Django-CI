@@ -16,7 +16,7 @@ pipeline {
         stage('Set up Python') {
             steps {
                 // Configura Python 3.8
-                bat 'python3.8 -m venv venv'
+                bat 'py -m venv venv'
                 bat '.\\venv\\Scripts\\activate && pip install --upgrade pip'
             }
         }
