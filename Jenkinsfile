@@ -78,8 +78,17 @@ pipeline {
 
     post {
         always {
-            // Limpia el entorno
             bat 'rmdir /s /q venv'
+        }
+        failure {
+            mail to: 'julianlozanon48@gmail.com',
+                 subject: "Build Failed: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
+                 body: "Ocurrio un error en build de Jenkins. Branch: {env.BRANCH_NAME} - Commit: ${env.GIT_COMMIT} - Ver detalles en ${env.BUILD_URL}."
+        }
+        success {
+            mail to: 'julianlozanon48@gmail.com',
+                 subject: "Build Success: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
+                 body: "Build exitoso Jenkins. Branch: {env.BRANCH_NAME} - Ver detalles en ${env.BUILD_URL}."
         }
     }
 }
