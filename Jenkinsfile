@@ -10,7 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Clona el repositorio
-                git 'https://github.com/JulianL48/Django-CI.git'
+                git branch: 'Facturacion', url: 'https://github.com/JulianL48/Django-CI.git'
             }
         }
         stage('Set up Python') {
