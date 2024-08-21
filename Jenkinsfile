@@ -16,15 +16,15 @@ pipeline {
         stage('Set up Python') {
             steps {
                 // Configura Python 3.8
-                sh 'python3.8 -m venv venv'
-                sh '. venv/bin/activate && pip install --upgrade pip'
+                bat 'python3.8 -m venv venv'
+                bat '.\\venv\\Scripts\\activate && pip install --upgrade pip'
             }
         }
         stage('Install dependencies') {
             steps {
                 // Instala las dependencias
                 dir('MarketProject') {
-                    sh '. ../venv/bin/activate && pip install -r requirements.txt'
+                    bat '.\\..\\venv\\Scripts\\activate && pip install -r requirements.txt'
                 }
             }
         }
@@ -32,7 +32,7 @@ pipeline {
             steps {
                 // Ejecuta makemigrations
                 dir('MarketProject') {
-                    sh '. ../venv/bin/activate && python manage.py makemigrations'
+                    bat '.\\..\\venv\\Scripts\\activate && python manage.py makemigrations'
                 }
             }
         }
@@ -40,7 +40,7 @@ pipeline {
             steps {
                 // Ejecuta migrate
                 dir('MarketProject') {
-                    sh '. ../venv/bin/activate && python manage.py migrate'
+                    bat '.\\..\\venv\\Scripts\\activate && python manage.py migrate'
                 }
             }
         }
@@ -48,7 +48,7 @@ pipeline {
             steps {
                 // Configura el PYTHONPATH
                 script {
-                    env.PYTHONPATH = "${WORKSPACE}/MarketProject"
+                    env.PYTHONPATH = "${WORKSPACE}\\MarketProject"
                 }
             }
         }
@@ -57,7 +57,7 @@ pipeline {
                 // Ejecuta pytest con cobertura
                 dir('MarketProject') {
                     withEnv(["DJANGO_SETTINGS_MODULE=MarketProject.settings"]) {
-                        sh '. ../venv/bin/activate && pytest --cov=. --cov-report=xml'
+                        bat '.\\..\\venv\\Scripts\\activate && pytest --cov=. --cov-report=xml'
                     }
                 }
             }
@@ -66,7 +66,7 @@ pipeline {
             steps {
                 // Ejecuta el análisis de SonarCloud
                 dir('MarketProject') {
-                    sh '''. ../venv/bin/activate &&
+                    bat '''.\\..\\venv\\Scripts\\activate &&
                         sonar-scanner \
                         -Dsonar.projectKey=JulianL48_Django-CI \
                         -Dsonar.organization=julianl48 \
@@ -89,7 +89,7 @@ pipeline {
     post {
         always {
             // Limpia el entorno
-            sh 'rm -rf venv'
+            bat 'rmdir /s /q venv'
         }
     }
 }
