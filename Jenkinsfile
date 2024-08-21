@@ -66,16 +66,18 @@ pipeline {
             steps {
                 // Ejecuta el análisis de SonarCloud
                 dir('MarketProject') {
-                    bat '''.\\..\\venv\\Scripts\\activate &&
-                        sonar-scanner \
-                        -Dsonar.projectKey=JulianL48_Django-CI \
-                        -Dsonar.organization=julianl48 \
-                        -Dsonar.sources=./MarketProject \
-                        -Dsonar.host.url=https://sonarcloud.io \
-                        -Dsonar.python.coverage.reportPaths=coverage.xml \
-                        -Dsonar.branch.name=Facturacion \
-                        -Dsonar.exclusions=**/wsgi.py,**/asgi.py,**/manage.py'''
-                }
+					bat '''
+					call ..\\venv\\Scripts\\activate
+					sonar-scanner ^
+						-Dsonar.projectKey=JulianL48_Django-CI ^
+						-Dsonar.organization=julianl48 ^
+						-Dsonar.sources=./MarketProject ^
+						-Dsonar.host.url=https://sonarcloud.io ^
+						-Dsonar.python.coverage.reportPaths=coverage.xml ^
+						-Dsonar.branch.name=Facturacion ^
+						-Dsonar.exclusions=**/wsgi.py,**/asgi.py,**/manage.py
+					'''
+				}
             }
         }
         stage('Upload coverage report') {
