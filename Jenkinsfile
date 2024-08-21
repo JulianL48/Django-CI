@@ -68,6 +68,12 @@ pipeline {
                 archiveArtifacts artifacts: 'MarketProject/coverage.xml', fingerprint: true
             }
         }
+		stage('Publish Coverage Report') {
+            steps {
+                // Publica el reporte de cobertura en Jenkins
+                publishCoverage adapters: [coberturaAdapter('MarketProject/coverage.xml')], sourceFileResolver: sourceFiles('NEVER_STORE')
+            }
+        }
     }
 
     post {
